@@ -12,9 +12,7 @@ setup(
     package_data={
         'djurls': [],
     },
-    install_requires=[
-        'django>=1.7',
-    ],
+    install_requires=[],
     zip_safe=False,
     version=version,
     description='Decorator for mapping Django URLs.',
