@@ -96,10 +96,10 @@ from app.views import ClassBasedView
 namespace_patterns = [
     url('^fn-based/', fn_based_view, name='fn_based'),
 ]
+
 included_patterns = [
     url('^class-based/', ClassBasedView.as_view(), name='class_based'),
 ]
-
 
 urlpatterns = [
     url('^namespace/', include(namespace_patterns, namespace='test'),
