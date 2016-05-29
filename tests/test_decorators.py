@@ -1,8 +1,8 @@
 
 from djurls import umap
+from tests import urls
+from tests import views
 import pytest
-import urls
-import views
 
 
 def check_url(name, patterns=None):
