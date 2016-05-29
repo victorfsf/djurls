@@ -1,16 +1,16 @@
 language: python
 
 python:
+  - "2.6"
+  - "2.7"
   - "3.3"
   - "3.4"
   - "3.5"
-  - "2.7"
-  - "2.6"
 
 install:
-  - pip install tox
   - pip install coveralls
   - pip install python-coveralls
+  - pip install tox
 
 script:
   - tox
