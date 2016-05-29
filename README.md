@@ -1,9 +1,9 @@
 # djURLs
 
-*Decorator for mapping Django URLs.* 
+*Decorator for mapping Django URLs.*
 Based on Flask's `route` decorator.
 
-Works with Python versions: **2.6, 2.7, 3.2, 3.3, 3.5**.
+Works with Python versions: **2.6, 2.7, 3.4, 3.5**.
 
 Django versions: **1.7 or greater**.
 
@@ -39,7 +39,7 @@ from djurls import umap
 @umap(r'^fn-based/$', name='fn_based')
 def fn_based_view(request):
     return
-    
+
 
 @umap(r'^class-based/$', name='class_based')
 class ClassBasedView(View):
@@ -79,7 +79,7 @@ from djurls import umap
 @umap(r'^fn-based/$', name='fn_based', namespace='test')
 def fn_based_view(request):
     return
-    
+
 
 @umap(r'^class-based/$', name='class_based', include='included_patterns')
 class ClassBasedView(View):
