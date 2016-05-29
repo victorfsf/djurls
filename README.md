@@ -13,7 +13,6 @@ Django versions: **1.7 or greater**.
 
 File: **project/urls.py**
 ```python
-
 from django.conf.urls import url
 
 urlpatterns = [
@@ -34,6 +33,7 @@ File: **project/app/views.py**
 ```python
 from django.views.generic import View
 from djurls import umap
+
 
 @umap('^fn-based/', name='fn_based')
 def fn_based_view(request):
@@ -73,6 +73,7 @@ File: **project/app/views.py**
 ```python
 from django.views.generic import View
 from djurls import umap
+
 
 @umap('^fn-based/', name='fn_based', namespace='test')
 def fn_based_view(request):
