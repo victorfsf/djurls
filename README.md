@@ -1,6 +1,7 @@
 # djURLs
 
-*Decorator for mapping Django URLs.*
+*Decorator for mapping Django URLs.* 
+Based on Flask's `route` decorator.
 
 Works with Python versions: **2.6, 2.7, 3.2, 3.3, 3.5**.
 
