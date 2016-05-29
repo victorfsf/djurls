@@ -3,7 +3,7 @@
 *Decorator for mapping Django URLs.*
 Based on Flask's `route` decorator.
 
-Works with Python versions: **2.6, 2.7, 3.4, 3.5**.
+Works with Python versions: **2.7, 3.4, 3.5**.
 
 Django versions: **1.7 or greater**.
 
