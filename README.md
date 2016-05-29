@@ -36,17 +36,17 @@ from django.views.generic import View
 from djurls import umap
 
 
-@umap('^fn-based/', name='fn_based')
+@umap(r'^fn-based/$', name='fn_based')
 def fn_based_view(request):
     return
     
 
-@umap('^class-based/', name='class_based')
+@umap(r'^class-based/$', name='class_based')
 class ClassBasedView(View):
     template_name = 'app/index.html'
 
 
-umap('^example/', name='example')(
+umap(r'^example/$', name='example')(
     ClassBasedView.as_view(template_name='app/example.html')
 )
 ```
@@ -64,8 +64,8 @@ namespace_patterns = []
 included_patterns = []
 
 urlpatterns = [
-    url('^namespace/', include(namespace_patterns, namespace='test'),
-    url('^include/', include(included_patterns),
+    url(r'^namespace/$', include(namespace_patterns, namespace='test'),
+    url(r'^include/$', include(included_patterns),
 ]
 ```
 
@@ -76,12 +76,12 @@ from django.views.generic import View
 from djurls import umap
 
 
-@umap('^fn-based/', name='fn_based', namespace='test')
+@umap(r'^fn-based/$', name='fn_based', namespace='test')
 def fn_based_view(request):
     return
     
 
-@umap('^class-based/', name='class_based', include='included_patterns')
+@umap(r'^class-based/$', name='class_based', include='included_patterns')
 class ClassBasedView(View):
     pass
 
@@ -96,17 +96,17 @@ from app.views import fn_based_view
 from app.views import ClassBasedView
 
 namespace_patterns = [
-    url('^fn-based/', fn_based_view, name='fn_based'),
+    url(r'^fn-based/$', fn_based_view, name='fn_based'),
 ]
 
 included_patterns = [
-    url('^class-based/', ClassBasedView.as_view(), name='class_based'),
+    url(r'^class-based/$', ClassBasedView.as_view(), name='class_based'),
 ]
 
 urlpatterns = [
-    url('^namespace/', include(namespace_patterns, namespace='test'),
-    url('^include/', include(included_patterns),
-    url('^example/', ClassBasedView.as_view(
+    url(r'^namespace/', include(namespace_patterns, namespace='test'),
+    url(r'^include/', include(included_patterns),
+    url(r'^example/$', ClassBasedView.as_view(
             template_name='app/example.html'), name='example'),
 ]
 
