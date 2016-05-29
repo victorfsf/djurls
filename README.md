@@ -93,9 +93,17 @@ File: **project/app/urls.py**
 from app.views import fn_based_view
 from app.views import ClassBasedView
 
-urlpatterns = [
+namespace_patterns = [
     url('^fn-based/', fn_based_view, name='fn_based'),
+]
+included_patterns = [
     url('^class-based/', ClassBasedView.as_view(), name='class_based'),
+]
+
+
+urlpatterns = [
+    url('^namespace/', include(namespace_patterns, namespace='test'),
+    url('^include/', include(included_patterns),
     url('^example/', ClassBasedView.as_view(
             template_name='app/example.html'), name='example'),
 ]
