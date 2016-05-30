@@ -71,6 +71,7 @@ umap(r'^example/$', name='example')(
 
 File: **project/app/urls.py**
 ```python
+from django.conf.urls import include
 from django.conf.urls import url
 
 namespace_patterns = []
@@ -104,9 +105,10 @@ class ClassBasedView(View):
 
 File: **project/app/urls.py**
 ```python
-
 from app.views import fn_based_view
 from app.views import ClassBasedView
+from django.conf.urls import include
+from django.conf.urls import url
 
 namespace_patterns = [
     url(r'^fn-based/$', fn_based_view, name='fn_based'),
