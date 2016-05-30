@@ -26,6 +26,7 @@ $ pip install djurls
 
 File: **project/urls.py**
 ```python
+from django.conf.urls import include
 from django.conf.urls import url
 
 urlpatterns = [
