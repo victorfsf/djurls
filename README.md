@@ -13,6 +13,12 @@ Works with Python versions: **2.7, 3.4, 3.5**.
 
 Django versions: **1.7 or greater**.
 
+## Install
+
+```
+$ pip install djurls
+```
+
 ## Usage
 
 ###### This usage guide is based on *Django 1.9*.
