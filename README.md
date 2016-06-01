@@ -13,6 +13,12 @@ Works with Python versions: **2.7, 3.4, 3.5**.
 
 Django versions: **1.7 or greater**.
 
+## Install
+
+```
+$ pip install djurls
+```
+
 ## Usage
 
 ###### This usage guide is based on *Django 1.9*.
@@ -20,6 +26,7 @@ Django versions: **1.7 or greater**.
 
 File: **project/urls.py**
 ```python
+from django.conf.urls import include
 from django.conf.urls import url
 
 urlpatterns = [
@@ -64,6 +71,7 @@ umap(r'^example/$', name='example')(
 
 File: **project/app/urls.py**
 ```python
+from django.conf.urls import include
 from django.conf.urls import url
 
 namespace_patterns = []
@@ -97,9 +105,10 @@ class ClassBasedView(View):
 
 File: **project/app/urls.py**
 ```python
-
 from app.views import fn_based_view
 from app.views import ClassBasedView
+from django.conf.urls import include
+from django.conf.urls import url
 
 namespace_patterns = [
     url(r'^fn-based/$', fn_based_view, name='fn_based'),
