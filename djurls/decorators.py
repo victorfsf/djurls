@@ -3,7 +3,7 @@ from django.conf.urls import url
 from django.utils.module_loading import import_string
 
 
-def umap(path, name=None, include=None, namespace=None, urls=None, **kwargs):
+def umap(path, name=None, include=None, namespace=None):
     """
         Maps a given URL path and name to a view
         Arguments:
@@ -11,22 +11,25 @@ def umap(path, name=None, include=None, namespace=None, urls=None, **kwargs):
 
         Optional arguments:
             - name: the URL name, which Django uses to identify the URL;
-            - include: the URL's 'namespace' object name;
-            - namespace: the URL's 'namespace';
-            - urls: a custom path to the app's urls module, if needed;
-            - kwargs: the 'as_view' function kwargs (for class-based views).
+            - include: the URL's namespace object name;
+            - namespace: the URL's namespace;
     """
-    def route_wrapper(view):
+    def url_wrapper(view):
         # gets the module name
         module = view.__module__.split('.', 1)[0]
         # gets the view function (checking if it's a class-based view)
-        fn = view.as_view(**kwargs) if hasattr(view, 'as_view') else view
+        fn = view.as_view() if hasattr(view, 'as_view') else view
+
+        if namespace and include:
+            raise TypeError(
+                'You can\'t use \'namespace\' and \'include\''
+                ' at the same time!'
+            )
 
         if namespace:
             # imports the urlpatterns object
-            base = import_string('{}.{}.urlpatterns'.format(
+            base = import_string('{}.urls.urlpatterns'.format(
                 module,
-                urls if urls else 'urls',
             ))
 
             # searchs for the namespace
@@ -46,12 +49,11 @@ def umap(path, name=None, include=None, namespace=None, urls=None, **kwargs):
             urlpatterns = urlpatterns_list.pop(0).url_patterns
         else:
             # imports the urlpatterns object
-            urlpatterns = import_string('{}.{}.{}'.format(
+            urlpatterns = import_string('{}.urls.{}'.format(
                 module,
-                urls if urls else 'urls',
-                include if include else 'urlpatterns'
+                include or 'urlpatterns'
             ))
         # appends the url with its given name
         urlpatterns.append(url(path, fn, name=name))
         return view
-    return route_wrapper
+    return url_wrapper

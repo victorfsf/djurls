@@ -34,3 +34,12 @@ def test_include():
 def test_raise_value_error():
     with pytest.raises(ValueError):
         umap('^value-error/', namespace='errors')(views.fn_based_view)
+
+
+def test_raise_type_error():
+    with pytest.raises(TypeError):
+        umap(
+            '^value-error/',
+            namespace='errors',
+            include='errors_patterns'
+        )(views.fn_based_view)
