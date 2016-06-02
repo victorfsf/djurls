@@ -1,6 +1,7 @@
 
 from django.conf.urls import url
 from django.utils.module_loading import import_string
+from djurls.utils import _find_urls_module
 
 
 def umap(path, name=None, include=None, namespace=None):
@@ -17,7 +18,7 @@ def umap(path, name=None, include=None, namespace=None):
     """
     def url_wrapper(view):
         # gets the module name
-        module = view.__module__.split('.', 1)[0]
+        module = _find_urls_module(view)
         # gets the view function (checking if it's a class-based view)
         fn = view.as_view() if hasattr(view, 'as_view') else view
 
@@ -58,3 +59,36 @@ def umap(path, name=None, include=None, namespace=None):
         urlpatterns.append(url(path, fn, name=name))
         return view
     return url_wrapper
+
+
+def uconf(**kwargs):
+    """
+        Function to set a default namespace/'include' object.
+        It returns a decorator with the namespace/include argument already set.
+        Arguments:
+            - include: A custom URL list, previously
+                       set on the module's urls.py;
+            - namespace: the URL's namespace;
+    """
+    if len(kwargs) != 1:
+        # this function must have at least
+        # one specific argument (namespace or include)
+        raise TypeError(
+            'uconf() takes exactly 1 argument. ({} given)'.format(len(kwargs))
+        )
+
+    # gets the argument name
+    arg_name = list(kwargs.keys()).pop(0)
+    # checks if it has a valid name (it must be 'namespace' or 'include')
+    if arg_name not in ['include', 'namespace']:
+        # if it's not a valid name, raise a TypeError
+        raise TypeError(
+            'Invalid argument: {}'.format(arg_name)
+        )
+
+    # creates the decorator with namespace/include already set.
+    def uconf_wrapper(path, name=None):
+        def url_wrapper(fn):
+            return umap(path, name, **kwargs)(fn)
+        return url_wrapper
+    return uconf_wrapper
