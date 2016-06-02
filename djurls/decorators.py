@@ -5,13 +5,14 @@ from django.utils.module_loading import import_string
 
 def umap(path, name=None, include=None, namespace=None):
     """
-        Maps a given URL path and name to a view
+        Maps a given URL path, name and namespace to a view.
         Arguments:
             - path: the URL regex, e.g.: '^teste/(?P<pk>[0-9])/$'.
 
         Optional arguments:
             - name: the URL name, which Django uses to identify the URL;
-            - include: the URL's namespace object name;
+            - include: A custom URL list, previously
+                       set on the module's urls.py;
             - namespace: the URL's namespace;
     """
     def url_wrapper(view):
