@@ -13,116 +13,17 @@ Works with Python versions: **2.7, 3.4, 3.5**.
 
 Django versions: **1.7 or greater**.
 
-## Install
+Report issues [here](https://github.com/victorfsf/djurls/issues/new).
 
+## Installation
+
+Install via pip:
 ```
 $ pip install djurls
 ```
 
-## Usage
+Or download from the [PyPI repository](https://pypi.python.org/pypi/djurls/).
 
-###### This usage guide is based on *Django 1.9*.
+## Documentation
 
-
-File: **project/urls.py**
-```python
-from django.conf.urls import include
-from django.conf.urls import url
-
-urlpatterns = [
-    url('^app/', include('app.urls', namespace='app'))
-]
-
-```
-
-
-File: **project/app/urls.py**
-```python
-# Define an empty 'urlpatterns' list
-urlpatterns = []
-```
-
-
-File: **project/app/views.py**
-```python
-from django.views.generic import View
-from djurls import umap
-
-
-@umap(r'^fn-based/$', name='fn_based')
-def fn_based_view(request):
-    return
-
-
-@umap(r'^class-based/$', name='class_based')
-class ClassBasedView(View):
-    template_name = 'app/index.html'
-
-
-umap(r'^example/$', name='example')(
-    ClassBasedView.as_view(template_name='app/example.html')
-)
-```
-
-#### Namespaces & includes
-
-###### You can also use namespaces/includes with `@umap`:
-
-
-File: **project/app/urls.py**
-```python
-from django.conf.urls import include
-from django.conf.urls import url
-
-namespace_patterns = []
-included_patterns = []
-
-urlpatterns = [
-    url(r'^namespace/$', include(namespace_patterns, namespace='test'),
-    url(r'^include/$', include(included_patterns),
-]
-```
-
-
-File: **project/app/views.py**
-```python
-from django.views.generic import View
-from djurls import umap
-
-
-@umap(r'^fn-based/$', name='fn_based', namespace='test')
-def fn_based_view(request):
-    return
-
-
-@umap(r'^class-based/$', name='class_based', include='included_patterns')
-class ClassBasedView(View):
-    pass
-
-```
-
-#### Doing the examples above is the same as doing:
-
-File: **project/app/urls.py**
-```python
-from app.views import fn_based_view
-from app.views import ClassBasedView
-from django.conf.urls import include
-from django.conf.urls import url
-
-namespace_patterns = [
-    url(r'^fn-based/$', fn_based_view, name='fn_based'),
-]
-
-included_patterns = [
-    url(r'^class-based/$', ClassBasedView.as_view(), name='class_based'),
-]
-
-urlpatterns = [
-    url(r'^namespace/', include(namespace_patterns, namespace='test'),
-    url(r'^include/', include(included_patterns),
-    url(r'^example/$', ClassBasedView.as_view(
-            template_name='app/example.html'), name='example'),
-]
-
-```
+See the wiki for the [documentation](https://github.com/victorfsf/djurls/wiki).
