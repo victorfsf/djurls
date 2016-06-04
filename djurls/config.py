@@ -1,5 +1,6 @@
 
 from djurls.decorators import umap
+from functools import partial
 
 
 def uconf(**kwargs):
@@ -28,8 +29,4 @@ def uconf(**kwargs):
         )
 
     # creates the decorator with namespace/include already set.
-    def uconf_wrapper(path, name=None):
-        def url_wrapper(fn):
-            return umap(path, name, **kwargs)(fn)
-        return url_wrapper
-    return uconf_wrapper
+    return partial(umap, **kwargs)

@@ -2,9 +2,10 @@
 from django.conf.urls import url
 from django.utils.module_loading import import_string
 from djurls.utils import _find_urls_module
+from functools import partial
 
 
-def umap(path, name=None, include=None, namespace=None):
+def umap(path, name=None, include=None, namespace=None, priority=None):
     """
         Maps a given URL path, name and namespace to a view.
         Arguments:
@@ -56,6 +57,10 @@ def umap(path, name=None, include=None, namespace=None):
                 include or 'urlpatterns'
             ))
         # appends the url with its given name
-        urlpatterns.append(url(path, fn, name=name))
+        call = (
+            urlpatterns.append if priority is None
+            else partial(urlpatterns.insert, priority)
+        )
+        call(url(path, fn, name=name))
         return view
     return url_wrapper
