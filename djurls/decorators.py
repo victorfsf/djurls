@@ -16,6 +16,7 @@ def umap(path, name=None, include=None, namespace=None, priority=None):
             - include: A custom URL list, previously
                        set on the module's urls.py;
             - namespace: the URL's namespace;
+            - priority: the URL's priority;
     """
     def url_wrapper(view):
         # gets the module name
