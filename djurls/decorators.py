@@ -31,23 +31,18 @@ def umap(path, name=None, include=None, namespace=None, priority=None):
 
         if namespace:
             # imports the urlpatterns object
-            base = import_string('{}.urls.urlpatterns'.format(
-                module,
-            ))
-
+            base = import_string('{}.urls.urlpatterns'.format(module))
             # searchs for the namespace
             urlpatterns_list = [
                 x for x in base
                 if getattr(x, 'namespace', None) == namespace
             ]
-
             # if the list length is different than 1,
             # then the namespace is either duplicated or doesn't exist
             if len(urlpatterns_list) != 1:
                 raise ValueError(
                     'Namespace \'{}\' not in list.'.format(namespace)
                 )
-
             # if the namespace was found, get its object
             urlpatterns = urlpatterns_list.pop(0).url_patterns
         else:

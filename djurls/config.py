@@ -13,12 +13,11 @@ def uconf(**kwargs):
             - namespace: the URL's namespace.
     """
     if len(kwargs) != 1:
-        # this function must have at least
+        # this function must have exactly
         # one specific argument (namespace or include)
         raise TypeError(
             'uconf() takes exactly 1 argument. ({} given)'.format(len(kwargs))
         )
-
     # gets the argument name
     arg_name = list(kwargs.keys()).pop(0)
     # checks if it has a valid name (it must be 'namespace' or 'include')
@@ -27,6 +26,5 @@ def uconf(**kwargs):
         raise TypeError(
             'Invalid argument: {}'.format(arg_name)
         )
-
     # creates the decorator with namespace/include already set.
     return partial(umap, **kwargs)
